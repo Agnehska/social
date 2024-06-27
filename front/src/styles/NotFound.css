@@ -1,0 +1,31 @@
+.notfound{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notfound__text{
+  color: var(--text-color);
+  transform: translateY(30vh);
+  font-size: 3rem;
+  font-weight: 500;
+  margin-bottom: 50px;
+  border: 2px solid var(--border-color);
+  padding: 1rem;
+}
+
+.notfound__subtext{
+  transform: translateY(30vh);
+  color: var(--text-color);
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.notfound__link{
+  color: rgb(59, 37, 3);
+  transform: translateY(30vh);
+  font-size: 2rem;
+  font-weight: 500;
+  border-bottom: 1px dashed var(--border-color);
+  padding: 0 10px;
+}

@@ -2,8 +2,8 @@ import express from "express";
 import 'dotenv/config';
 import mongoose from "mongoose";
 import cors from "cors";
-import bcrypt from "bcrypt";
 import cookieParser from "cookie-parser";
+import authRouter from './routers/authRouter.js';
 
 const app = express();
 
@@ -14,22 +14,15 @@ app.use(cookieParser())
 const port = process.env.PORT || 5000;
 const url = process.env.MONGO_URL;
 
-mongoose.connect(url, {
-  useCreateIndex: true,
-  useFindANdModify: false,
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}).catch(err => console.log(err.reason));
+app.use('/api', authRouter)
 
-app.get('/', async (req, res) => {
+const start = async () => {
   try {
-    res.status(500).send('Hello')
-  } catch (err) {
-    console.log(err);
+    await mongoose.connect(url)
+    app.listen(port, () => console.log(`server started on port ${port}`))
+  } catch (e) {
+    console.log(e)
   }
-  
-})
+}
 
-app.listen(port, () => {
-  console.log('app is running')
-})
+start()
