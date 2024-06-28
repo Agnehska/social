@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const BASEURL = 'http://localhost:5000'
+
 export const getDataApi = async (url, token) => {
   const res = await axios.get(`/api/${url}`,{
     headers: {Authorization: token}
@@ -8,7 +10,8 @@ export const getDataApi = async (url, token) => {
 }
 
 export const postDataApi = async (url, post, token) => {
-  const res = await axios.post(`/api/${url}`, post, {
+  console.log(post)
+  const res = await axios.post(`${BASEURL}/api/${url}`, post, {
     headers: {Authorization: token}
   })
   return res;
