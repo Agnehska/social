@@ -11,4 +11,8 @@ authRouter.post('/logout', authCtrl.logout);
 
 authRouter.post('/refresh_token', authCtrl.generateAccessToken);
 
+authRouter.post('/upload', authCtrl.upload);
+
+authRouter.get('/images', authCtrl.images);
+
 export default authRouter;

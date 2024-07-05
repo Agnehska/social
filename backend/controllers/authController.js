@@ -1,6 +1,11 @@
 import UserModel from '../models/userModel.js';
+import ImageModel from '../models/photoModel.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import path from 'path';
+import util from 'util';
+import __dirname from '../server.js';
+
 
 const authCtrl = {
   register: async (req, res) => {
@@ -109,6 +114,44 @@ const authCtrl = {
           access_token
         })
       })
+    } catch (err){
+      res.status(500).json({msg: err.message})
+    }
+  },
+  upload: async (req, res) => {
+    try {
+      const file = req.files.file;
+      const fileName = file.name;
+      const size = file.data.length;
+      const extension = path.extname(fileName);
+      
+      const allowedExtensions = /png|jpeg|jpg|gif/;
+
+      if (!allowedExtensions.test(extension)) throw "Unsurpported extentsion!"
+      if (size > 5000000) throw "File must be less than 5MB"
+
+      const md5 = file.md5;
+
+      const URL = '/uploads/' + md5 + extension;
+
+      await util.promisify(file.mv)('./public' + URL);
+
+      const newImage = await new ImageModel({
+        filename: URL
+      })
+
+      await newImage.save();
+
+      res.json({msg: "File uploaded successfully", path: URL})
+    } catch (err){
+      res.status(500).json({msg: err.message})
+    }
+  },
+  images: async (req, res) => {
+    try {
+      const files = await ImageModel.find()
+      console.log(files)
+      res.json({msg: "It's ok", files: files})
     } catch (err){
       res.status(500).json({msg: err.message})
     }

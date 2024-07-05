@@ -7,9 +7,17 @@ class UserStore{
     username: '',
     email: '',
     password: '',
-    gender: ''
-  }
-  errorBack = ''
+    gender: '',
+    story: '',
+    phone: '',
+    address: '',
+    avatar: '',
+    website: '',
+    following: [],
+    friends: []
+  };
+  errorBack = '';
+  token = '';
 
   constructor(){
     makeAutoObservable(this)
@@ -32,13 +40,17 @@ class UserStore{
     this.user = userInfo
     try{
       const res = await postDataApi('login', userInfo);
-      console.log('after login', res)
-      this.errorBack = ''
+      console.log('after login', res);
+      this.errorBack = '';
+      this.token = res.data.access_token;
+      console.log(this.token)
+
+      localStorage.setItem('login', true)
     } catch (e){
-      console.log(e.response.data.msg)
-      this.errorBack = e.response.data.msg
+      console.log(e.response.data.msg);
+      this.errorBack = e.response.data.msg;
     }
-    console.log(this.user)
+    console.log(this.user);
   }
 }
 
