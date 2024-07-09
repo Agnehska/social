@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import UserStore from "../stores/user-store";
 import { observer } from "mobx-react-lite";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = observer(() => {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const Login = observer(() => {
     e.preventDefault();
     loginUser(userData)
 
-    if (errorBack !== '') navigate('/')
+    if (errorBack !== '') navigate('/profile')
   }
 
   return (
@@ -96,9 +96,9 @@ const Login = observer(() => {
             <p className="inline-flex items-center text-gray-700 font-medium text-xs text-center">
               <span className="ml-2">
                 You don't have an account?
-                <a href="#" className="text-xs ml-2 text-blue-500 font-semibold">
+                <Link to="/register" className="text-xs ml-2 text-blue-500 font-semibold">
                   Register now &rarr;
-                </a>
+                </Link>
               </span>
             </p>
           </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import UserStore from "../stores/user-store";
 import { observer } from "mobx-react-lite";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = observer( () => {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const Register = observer( () => {
     if (userData.password === password2){
       setErrors('')
       registerUser(userData)
-      if (errorBack !== '') navigate('/login')
+      navigate('/login')
       setUserData({
         fullname:'',
         username: '',
@@ -189,9 +189,9 @@ const Register = observer( () => {
             <p className="inline-flex items-center text-gray-700 font-medium text-xs text-center">
               <span className="ml-2">
                 If you have an account you can
-                <a href="#" className="text-xs ml-2 text-blue-500 font-semibold">
+                <Link to="/" className="text-xs ml-2 text-blue-500 font-semibold">
                   Login &rarr;
-                </a>
+                </Link>
               </span>
             </p>
           </div>

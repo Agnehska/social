@@ -14,7 +14,7 @@ class UserStore{
     avatar: '',
     website: '',
     following: [],
-    friends: []
+    friends: [],
   };
   errorBack = '';
   token = '';
@@ -37,14 +37,14 @@ class UserStore{
   }
 
   loginUser = async (userInfo) => {
-    this.user = userInfo
+    this.user = {...userInfo}
     try{
       const res = await postDataApi('login', userInfo);
-      console.log('after login', res);
+      console.log('after login', res.data.user);
       this.errorBack = '';
       this.token = res.data.access_token;
       console.log(this.token)
-
+      this.user = structuredClone(res.data.user)
       localStorage.setItem('login', true)
     } catch (e){
       console.log(e.response.data.msg);

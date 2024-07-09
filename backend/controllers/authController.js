@@ -1,5 +1,6 @@
 import UserModel from '../models/userModel.js';
 import ImageModel from '../models/photoModel.js';
+import VideoModel from '../models/videoModel.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import path from 'path';
@@ -120,6 +121,7 @@ const authCtrl = {
   },
   upload: async (req, res) => {
     try {
+      console.log(req.files.file)
       const file = req.files.file;
       const fileName = file.name;
       const size = file.data.length;
@@ -142,7 +144,7 @@ const authCtrl = {
 
       await newImage.save();
 
-      res.json({msg: "File uploaded successfully", path: URL})
+      res.json({msg: "File uploaded successfully", file: newImage})
     } catch (err){
       res.status(500).json({msg: err.message})
     }
@@ -150,6 +152,31 @@ const authCtrl = {
   images: async (req, res) => {
     try {
       const files = await ImageModel.find()
+      console.log(files)
+      res.json({msg: "It's ok", files: files})
+    } catch (err){
+      res.status(500).json({msg: err.message})
+    }
+  },
+  uploadVideo: async (req, res) => {
+    try {
+      
+      const {title, description, filename} = req.body;
+
+      const newVideo = await new VideoModel({
+        title, description, filename
+      })
+
+      await newVideo.save();
+
+      res.json({msg: "File uploaded successfully", file: newVideo})
+    } catch (err){
+      res.status(500).json({msg: err.message})
+    }
+  },
+  videos: async (req, res) => {
+    try {
+      const files = await VideoModel.find()
       console.log(files)
       res.json({msg: "It's ok", files: files})
     } catch (err){

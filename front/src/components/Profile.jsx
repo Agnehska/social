@@ -1,12 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
+import UserStore from '../stores/user-store';
+import { observer } from 'mobx-react-lite'
 
-export const Profile = () => {
-
-  useEffect(() => {
-    fetch('http://localhost:3000/profile')
-    .then(res => res.json())
-    .then(profile => console.log(profile))
-  }, [])  
+export const Profile = observer(() => {
+    const { user, errorBack } = UserStore;
+    console.log(user.fullname)
   return (
     <div className="flex space-x-4 pt-4">
         <div className="bg-white overflow-hidden shadow rounded-lg border mx-4 box">
@@ -30,7 +28,7 @@ export const Profile = () => {
                             Full name
                         </dt>
                         <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            John Doe
+                            {user.fullname}
                         </dd>
                     </div>
                     <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -38,7 +36,7 @@ export const Profile = () => {
                             Email address
                         </dt>
                         <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            johndoe@example.com
+                            {user.email}
                         </dd>
                     </div>
                     <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -46,39 +44,39 @@ export const Profile = () => {
                             Phone number
                         </dt>
                         <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            (123) 456-7890
+                            {user.phone}
                         </dd>
                     </div>
                     <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-500">
-                            Contact Type
+                            Website
                         </dt>
                         <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            Employee
+                            {user.website}
                         </dd>
                     </div>
                     <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-500">
-                            Company
+                            Address
                         </dt>
                         <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            BoxPower
+                            {user.address}
                         </dd>
                     </div>
                     <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-500">
-                            Job Title
+                            Story
                         </dt>
                         <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            Project Engineer
+                            {user.story}
                         </dd>
                     </div>
                     <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-500">
-                            Department
+                            Gender
                         </dt>
                         <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            Civil & Electrical
+                            {user.gender}
                         </dd>
                     </div>
                 </dl>
@@ -152,4 +150,4 @@ export const Profile = () => {
         </div>
     </div>
   )
-}
+})

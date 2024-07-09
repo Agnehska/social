@@ -1,6 +1,12 @@
 import React from 'react';
+import UserStore from '../stores/user-store';
+import { observer } from 'mobx-react-lite';
 
-const Friends = () => {
+const Friends = observer(() => {
+	const { user, errorBack } = UserStore;
+
+	console.log(user)
+
 	return (
 		<div className='p-4 flex flex-wrap items-center justify-center'>
 			<div className='flex-shrink-0 m-6 relative overflow-hidden bg-blue-400 rounded-lg max-w-xs shadow-lg'>
@@ -131,6 +137,6 @@ const Friends = () => {
 			</div>
 		</div>
 	);
-};
+});
 
 export default Friends;

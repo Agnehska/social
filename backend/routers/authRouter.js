@@ -15,4 +15,8 @@ authRouter.post('/upload', authCtrl.upload);
 
 authRouter.get('/images', authCtrl.images);
 
+authRouter.post('/video', authCtrl.uploadVideo);
+
+authRouter.get('/video', authCtrl.videos);
+
 export default authRouter;

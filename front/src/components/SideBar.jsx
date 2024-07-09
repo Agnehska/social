@@ -1,14 +1,15 @@
 import React from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
-import Login from './Login';
-import Register from './Register';
+import Login from '../pages/Login';
+import Register from '../pages/Register';
 import Messages from './Messages';
 import Friends from './Friends';
 import { Profile } from './Profile';
-import { Photoes } from './Photoes';
+import { Photoes } from '../pages/Photoes';
 import { Music } from './Music';
 import { Video } from './Video';
 import { Wall } from './Wall';
+import NotFound from '../pages/NotFound';
 
 const SideBar = () => {
 	return (
@@ -60,19 +61,19 @@ const SideBar = () => {
 				</div>
 			</div>
 			<div className='mx-auto max-h-80 overscroll-auto'>
-                <Routes>
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/reg" element={<Register />} />
-                    <Route path="/message" element={<Messages />} />
-                    <Route path="/friends" element={<Friends />} />
-					<Route path="/profile" element={<Profile />} />
-					<Route path="/photoes" element={<Photoes />} />
-					<Route path="/music" element={<Music />} />
-					<Route path="/video" element={<Video />} />
-					<Route path="/news" element={<Wall />} />
-					{/* ugiuhyiuhyoiuy */}
-                </Routes>
-            </div>
+				<Routes>
+						<Route path="/" element={<Login />} />
+						<Route path="/reg" element={<Register />} />
+						<Route path="/message" element={<Messages />} />
+						<Route path="/friends" element={<Friends />} />
+						<Route path="/profile" element={<Profile />} />
+						<Route path="/photoes" element={<Photoes />} />
+						<Route path="/music" element={<Music />} />
+						<Route path="/video" element={<Video />} />
+						<Route path="/news" element={<Wall />} />
+						<Route path='*' element={<NotFound />} />
+				</Routes>
+			</div>
 		</div>
 	);
 };
