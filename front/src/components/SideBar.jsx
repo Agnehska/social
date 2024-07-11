@@ -2,13 +2,13 @@ import React from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
-import Messages from './Messages';
-import Friends from './Friends';
-import { Profile } from './Profile';
+import Messages from '../pages/Messages';
+import Friends from '../pages/Friends';
+import { Profile } from '../pages/Profile';
 import { Photoes } from '../pages/Photoes';
-import { Music } from './Music';
-import { Video } from './Video';
-import { Wall } from './Wall';
+import { Music } from '../pages/Music';
+import { Video } from '../pages/Video';
+import { Wall } from '../pages/Wall';
 import NotFound from '../pages/NotFound';
 
 const SideBar = () => {
@@ -63,7 +63,7 @@ const SideBar = () => {
 			<div className='mx-auto max-h-80 overscroll-auto'>
 				<Routes>
 						<Route path="/" element={<Login />} />
-						<Route path="/reg" element={<Register />} />
+						<Route path="/register" element={<Register />} />
 						<Route path="/message" element={<Messages />} />
 						<Route path="/friends" element={<Friends />} />
 						<Route path="/profile" element={<Profile />} />

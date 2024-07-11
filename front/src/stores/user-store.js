@@ -27,17 +27,18 @@ class UserStore{
     this.user = userInfo
     try{
       const res = await postDataApi('register', userInfo);
-      console.log('after reg', res)
+      console.log('after reg', res.data.msg)
       this.errorBack = ''
     } catch (e){
       console.log(e.response.data.msg)
       this.errorBack = e.response.data.msg
     }
     console.log(this.user)
+    return this.errorBack
   }
 
   loginUser = async (userInfo) => {
-    this.user = {...userInfo}
+    this.user = userInfo
     try{
       const res = await postDataApi('login', userInfo);
       console.log('after login', res.data.user);
@@ -50,8 +51,9 @@ class UserStore{
       console.log(e.response.data.msg);
       this.errorBack = e.response.data.msg;
     }
-    console.log(this.user);
+    return this.errorBack
   }
 }
 
-export default new UserStore();
+const userStore = new UserStore()
+export default userStore;

@@ -14,7 +14,7 @@ export const Photoes = observer(() => {
     fetch("http://localhost:5000/api/images")
       .then((data) => data.json())
       .then((info) => setImages(info.files));
-    getImage()
+    // getImage()
   }, []);
 
   function handleSubmit(event) {

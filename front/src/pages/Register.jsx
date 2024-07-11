@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import UserStore from "../stores/user-store";
 import { observer } from "mobx-react-lite";
 import { Link, useNavigate } from "react-router-dom";
+import { useStores } from "../stores";
 
 const Register = observer( () => {
   const navigate = useNavigate();
-  const { user, errorBack, registerUser } = UserStore;
+  const { userStore } = useStores();
   const [userData, setUserData] = useState({
     fullname:'',
     username: '',
@@ -16,13 +17,15 @@ const Register = observer( () => {
   const [showPass, setShowPass] = useState(false);
   const [errors, setErrors] = useState('');
 
-  const createUser = (e) => {
+  const createUser = async (e) => {
     e.preventDefault();
     console.log('from Register.jsx', userData)
     if (userData.password === password2){
       setErrors('')
-      registerUser(userData)
-      navigate('/login')
+      
+      const err = await userStore.registerUser(userData)
+      console.log(err)
+      if (err === '') navigate('/')
       setUserData({
         fullname:'',
         username: '',
@@ -174,6 +177,7 @@ const Register = observer( () => {
               />
             </div>
             <p className="font-sans text-red-500 ">{errors}</p>
+            <p className="font-sans text-red-500 ">{userStore.errorBack}</p>
           </div>
           <button
             type="submit"

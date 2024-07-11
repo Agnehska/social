@@ -8,16 +8,6 @@ const Main = () => {
 	return (
         <>
         <Header />
-        {/* <header>
-            <div className="">
-                <img src={logo} alt="logo" className="header__logo" />
-                <h4>myApp</h4>
-            </div>
-            <div className="">
-                <p>ник</p>
-                <img src={avatar} alt="avatar" />
-            </div>
-        </header> */}
         <SideBar />
         </>
     );

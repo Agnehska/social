@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import UserStore from "../stores/user-store";
+import { useStores } from "../stores";
 import { observer } from "mobx-react-lite";
 import { Link, useNavigate } from "react-router-dom";
 
 const Login = observer(() => {
   const navigate = useNavigate();
-  const { user, errorBack, loginUser } = UserStore;
+  const { userStore } = useStores();
   const [showPass, setShowPass] = useState(false);
   const [userData, setUserData] = useState({
     fullname:'',
@@ -14,11 +14,11 @@ const Login = observer(() => {
     password: ''
   })
 
-  const loginHandler = (e) => {
+  async function loginHandler (e){
     e.preventDefault();
-    loginUser(userData)
-
-    if (errorBack !== '') navigate('/profile')
+    const err = await userStore.loginUser(userData)
+    console.log(err)
+    if (err === '') navigate('/profile')
   }
 
   return (
@@ -80,7 +80,7 @@ const Login = observer(() => {
                 onChange={(event) => setUserData({...userData, password: event.target.value})}
               />
             </div>
-            <p className="font-sans text-red-500">{errorBack}</p>
+            <p className="font-sans text-red-500">{userStore.errorBack}</p>
           </div>
           <button
             type="submit"
