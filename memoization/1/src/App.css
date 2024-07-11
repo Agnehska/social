@@ -1,0 +1,18 @@
+.App {
+  text-align: center;
+}
+
+.links a {
+  margin: 0 10px;
+}
+
+.uc-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 380px;
+  margin-top: 10px;
+}
+.uc-list {
+  display: flex;
+  flex-direction: column;
+}
