@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useStores } from "../stores";
 import { observer } from "mobx-react-lite";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,7 +13,10 @@ const Login = observer(() => {
     username: '',
     email: '',
     password: ''
-  })
+  });
+  const { register, formState: {
+    errors,
+  } } = useForm({mode: "onBlur"});
 
   async function loginHandler (e){
     e.preventDefault();
@@ -49,11 +53,22 @@ const Login = observer(() => {
                 className="pl-2 outline-none border-none w-full"
                 type="email"
                 name="email"
+                {...register("email", {
+                  required: "Поле обязательно к заполнению",
+                  pattern: {
+                    value: /^\S+@\S+$/i,
+                    message: "Неверный формат e-mail."
+                  }
+                })}
                 placeholder="Email"
                 required
                 value={userData.email}
                 onChange={(event) => setUserData({...userData, email: event.target.value})}
               />
+              
+            </div>
+            <div className="font-sans text-red-500">
+              {errors.email && <p>{errors.email.message}</p>}
             </div>
             <div className="flex items-center border-2 py-2 px-3 rounded-md">
               <svg
@@ -74,11 +89,21 @@ const Login = observer(() => {
                 type={showPass ? "text" : "password"}
                 name="password"
                 id=""
+                {...register("password", {
+                  required: "Поле обязательно к заполнению",
+                  minLength: {
+                    value: 8,
+                    message: "Минимум 8 символов."
+                  }
+                })}
                 placeholder="Password"
                 required
                 value={userData.password}
                 onChange={(event) => setUserData({...userData, password: event.target.value})}
               />
+            </div>
+            <div className="font-sans text-red-500">
+              {errors.password && <p>{errors.password.message}</p>}
             </div>
             <p className="font-sans text-red-500">{userStore.errorBack}</p>
           </div>

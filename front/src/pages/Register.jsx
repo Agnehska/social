@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import UserStore from "../stores/user-store";
+import { useForm } from "react-hook-form";
 import { observer } from "mobx-react-lite";
 import { Link, useNavigate } from "react-router-dom";
 import { useStores } from "../stores";
@@ -15,16 +15,17 @@ const Register = observer( () => {
   })
   const [password2, setPassword2] = useState("");
   const [showPass, setShowPass] = useState(false);
-  const [errors, setErrors] = useState('');
+  const [error, setError] = useState('');
+  const { register, formState: {
+    errors,
+  } } = useForm({mode: "onBlur"});
 
   const createUser = async (e) => {
     e.preventDefault();
-    console.log('from Register.jsx', userData)
     if (userData.password === password2){
-      setErrors('')
-      
+      setError('')  
       const err = await userStore.registerUser(userData)
-      console.log(err)
+
       if (err === '') navigate('/')
       setUserData({
         fullname:'',
@@ -33,7 +34,7 @@ const Register = observer( () => {
         password: ''
       })
     } else {
-      setErrors('Пароли не совпадают')
+      setError('Пароли не совпадают')
     }
   }
 
@@ -66,11 +67,21 @@ const Register = observer( () => {
                 className="pl-2 outline-none border-none w-full"
                 type="text"
                 name="fullname"
+                {...register("fullname", {
+                  required: "Поле обязательно к заполнению",
+                  minLength: {
+                    value: 5,
+                    message: "Минимум 5 символов."
+                  }
+                })}
                 placeholder="Full name"
                 required
                 value={userData.fullname}
                 onChange={(event) => setUserData({...userData, fullname: event.target.value})}
               />
+            </div>
+            <div className="font-sans text-red-500">
+              {errors.fullname && <p>{errors.fullname.message}</p>}
             </div>
             <div className="flex items-center border-2 py-2 px-3 rounded-md mb-4">
               <svg
@@ -92,11 +103,21 @@ const Register = observer( () => {
                 className="pl-2 outline-none border-none w-full"
                 type="text"
                 name="username"
+                {...register("username", {
+                  required: "Поле обязательно к заполнению",
+                  minLength: {
+                    value: 5,
+                    message: "Минимум 5 символов."
+                  }
+                })}
                 placeholder="Username"
                 required
                 value={userData.username}
                 onChange={(event) => setUserData({...userData, username: event.target.value})}
               />
+            </div>
+            <div className="font-sans text-red-500">
+              {errors.username && <p>{errors.username.message}</p>}
             </div>
             <div className="flex items-center border-2 py-2 px-3 rounded-md mb-4">
               <svg
@@ -117,13 +138,22 @@ const Register = observer( () => {
                 className="pl-2 outline-none border-none w-full"
                 type="email"
                 name="email"
+                {...register("email", {
+                  required: "Поле обязательно к заполнению",
+                  pattern: {
+                    value: /^\S+@\S+$/i,
+                    message: "Неверный формат e-mail."
+                  }
+                })}
                 placeholder="Email"
                 required
                 value={userData.email}
                 onChange={(event) => setUserData({...userData, email: event.target.value})}
               />
             </div>
-
+            <div className="font-sans text-red-500">
+              {errors.email && <p>{errors.email.message}</p>}
+            </div>
             <div className="flex items-center border-2 py-2 px-3 rounded-md">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -143,6 +173,13 @@ const Register = observer( () => {
                 type={showPass ? "text" : "password"}
                 name="password"
                 id="pass1"
+                {...register("password", {
+                  required: "Поле обязательно к заполнению",
+                  minLength: {
+                    value: 8,
+                    message: "Минимум 8 символов."
+                  }
+                })}
                 placeholder="Password"
                 required
                 value={userData.password}
@@ -150,6 +187,9 @@ const Register = observer( () => {
                     setUserData({...userData, password: event.target.value})
                 }}
               />
+            </div>
+            <div className="font-sans text-red-500">
+              {errors.password && <p>{errors.password.message}</p>}
             </div>
             <div className="flex items-center border-2 py-2 px-3 rounded-md">
               <svg
@@ -170,13 +210,24 @@ const Register = observer( () => {
                 type={showPass ? "text" : "password"}
                 name="password2"
                 id="pass2"
+                {...register("confirmPassword", {
+                  required: "Поле обязательно к заполнению",
+                  minLength: {
+                    value: 8,
+                    message: "Минимум 8 символов."
+                  }
+                })}
                 placeholder="Repeat password"
                 required
                 value={password2}
                 onChange={(event) => setPassword2(event.target.value)}
+                aria-invalid={errors.confirmPassword ? 'true' : 'false'}
               />
             </div>
-            <p className="font-sans text-red-500 ">{errors}</p>
+            <div className="font-sans text-red-500">
+              {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
+            </div>
+            <p className="font-sans text-red-500 ">{error}</p>
             <p className="font-sans text-red-500 ">{userStore.errorBack}</p>
           </div>
           <button
