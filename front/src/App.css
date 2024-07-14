@@ -54,3 +54,14 @@ li{
     transform: rotate(360deg);
   }
 }
+
+.post__picture{
+  width: 500px;
+  height: 500px;
+  object-fit: cover;
+}
+
+.post__picture img{
+  width: 100%;
+  height: 100%;
+}
