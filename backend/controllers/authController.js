@@ -1,6 +1,7 @@
 import UserModel from '../models/userModel.js';
 import ImageModel from '../models/photoModel.js';
 import VideoModel from '../models/videoModel.js';
+import PostModel from '../models/postModel.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import path from 'path';
@@ -55,37 +56,55 @@ const authCtrl = {
   },
   login: async (req, res) => {
     try {
+      // const {email, password} = req.body;
+
+      // const user = await UserModel.findOne({email})
+      // .populate("friends following", "-password")
+
+      // if (!user) return res.status(400).json({msg: 'User does not exist'})
+
+      // const isMatch = await bcrypt.compare(password, user.password)
+
+      // if (!isMatch) return res.status(400).json({msg: 'Password is incorrect'})
+
+      // const access_token = createAccessToken({id: user._id});
+      // const refresh_token = createRefreshToken({id: user._id});
+
+      
+      
+      
+      
       const {email, password} = req.body;
-
-      const user = await UserModel.findOne({email})
-      .populate("friends following", "-password")
-
-      if (!user) return res.status(400).json({msg: 'User does not exist'})
-
-      const isMatch = await bcrypt.compare(password, user.password)
-
-      if (!isMatch) return res.status(400).json({msg: 'Password is incorrect'})
-
-      const access_token = createAccessToken({id: user._id});
-      const refresh_token = createRefreshToken({id: user._id});
+      // console.log(req.body)
+      const newUser = await UserModel.findOne({email})
+      // console.log(newUser)
+      if (!newUser){
+        return res.status(400).json({message: `Пользователь ${username} не существует`})
+      }
+      const validPassword = bcrypt.compare(password, newUser.password)
+      if (!validPassword){
+        return res.status(400).json({message: `Введен неверный пароль`})
+      }
+      const access_token = createAccessToken({id: newUser._id});
+      const refresh_token = createRefreshToken({id: newUser._id});
 
       res.cookie('refreshtoken', refresh_token, {
         httpOnly: true,
         path:"/api/refresh_token",
         maxAge: 24*30*30*60*60*1000
       })
-      
-      
+
       res.json({
         msg: "login success",
         access_token,
         user: {
-          ...user._doc,
+          ...newUser._doc,
           password: ''
         }
       })
+   
     } catch (err){
-      res.status(500).json({msg: err.message})
+      res.status(500).json({message: err.message})
     }
   },
   logout: async (req, res) => {
@@ -159,16 +178,12 @@ const authCtrl = {
     }
   },
   uploadVideo: async (req, res) => {
-    try {
-      
+    try {   
       const {title, description, filename} = req.body;
-
       const newVideo = await new VideoModel({
         title, description, filename
       })
-
       await newVideo.save();
-
       res.json({msg: "File uploaded successfully", file: newVideo})
     } catch (err){
       res.status(500).json({msg: err.message})
@@ -179,6 +194,31 @@ const authCtrl = {
       const files = await VideoModel.find()
       console.log(files)
       res.json({msg: "It's ok", files: files})
+    } catch (err){
+      res.status(500).json({msg: err.message})
+    }
+  },
+  uploadPost: async (req, res) => {
+    try {
+      const {title, description, photo} = req.body;
+      const newPost = await new PostModel({
+        title, description, photo, user: req.user._id
+      })
+
+      await newPost.save();
+
+      res.json({msg: "File uploaded successfully", file: newPost})
+    } catch (err){
+      res.status(500).json({msg: err.message})
+    }
+  },
+  getPosts: async (req, res) => {
+    try {   
+      const info = await PostModel.find().populate('user')
+      // console.log(info[0].user.fullname)
+      // const userInfo = UserModel.findById(info[0].user);
+      // console.log(userInfo)
+      res.json({msg: "It's ok", data: info})
     } catch (err){
       res.status(500).json({msg: err.message})
     }

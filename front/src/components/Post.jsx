@@ -1,30 +1,29 @@
 import React, { useState } from 'react'
 
-const Post = () => {
+const Post = ({post}) => {
   const [isLiked, setIsLiked] = useState(false);
+  
   return (
     <div className="border p-7 rounded-xl bg-white dark:bg-gray-700 drop-shadow-md border-neutral-200/50 col-span-5 flex flex-col gap-y-10 justify-between">
       <div className="flex flex-col">
         <img
-          src="https://randomuser.me/api/portraits/women/30.jpg"
-          alt="John Doe"
+          src={post.user.avatar}
+          alt={post.user.fullname}
           className="h-10 w-10"
         />
-        <p className="pt-2 text-sm font-semibold">Emily Smith</p>
+        <p className="pt-2 text-sm font-semibold">{post.user.fullname}</p>
         <p className="text-sm font-medium text-slate-700/70 dark:text-gray-400">
-          Marketing Manager at ABC Company
+          {post.user.address}
         </p>
       </div>
       <div className="flex flex-col gap-y-3.5">
-        <p className="font-bold text-xl">Efficient customer support</p>
+        <p className="font-bold text-xl">{post.title}</p>
         <p className="font-medium text-slate-700/90 dark:text-gray-300">
-          The customer support team at our service is incredibly responsive
-          and helpful. They went above and beyond to assist me with my
-          issue.
+          {post.description}
         </p>
       </div>
       <div className="post__picture">
-        <img src="https://plus.unsplash.com/premium_photo-1671707015876-1c0e51c92eef?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="картинка" />
+        <img src={post.photo} alt="картинка" />
       </div>
       <svg
         onClick={() => setIsLiked(!isLiked)}

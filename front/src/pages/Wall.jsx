@@ -1,12 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Post from "../components/Post";
 
 export const Wall = () => {
   const [isLiked, setIsLiked] = useState(false);
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/posts')
+    .then(data => data.json())
+    .then(info => setPosts(info.data))
+  }, [])
   return (
     <section className="w-full mx-auto w-full px-3 pt-4 dark:bg-gray-800 dark:text-white">
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 w-full">
-        <Post />
+        {posts.map(post => {
+          return(
+            <Post key={post._id} post={post} />
+          )
+        })}
+        
         {/* <div
             className="border p-7 rounded-xl bg-white dark:bg-gray-700 drop-shadow-md border-neutral-200/50 col-span-2 flex flex-col gap-y-10 justify-between">
                 <div className="flex flex-col gap-y-3.5">
