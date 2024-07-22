@@ -1,21 +1,23 @@
 import { makeAutoObservable } from "mobx";
-import { postDataApi } from "../utils/fetchDataAPI";
+import { getDataApi, postDataApi } from "../utils/fetchDataAPI";
+
+const initialUser = {
+  fullname: '',
+  username: '',
+  email: '',
+  password: '',
+  gender: '',
+  story: '',
+  phone: '',
+  address: '',
+  avatar: '',
+  website: '',
+  following: [],
+  friends: [],
+};
 
 class UserStore{
-  user = {
-    fullname: '',
-    username: '',
-    email: '',
-    password: '',
-    gender: '',
-    story: '',
-    phone: '',
-    address: '',
-    avatar: '',
-    website: '',
-    following: [],
-    friends: [],
-  };
+  user = initialUser;
   errorBack = '';
   token = '';
 
@@ -52,6 +54,17 @@ class UserStore{
       this.errorBack = e.response.data.msg;
     }
     return this.errorBack
+  }
+  logoutUser = async () => {
+    try{
+      const res = await getDataApi('logout', this.user.token);
+      this.user = initialUser;
+      // console.log('after logout', res.data, this.user);
+      this.errorBack = '';
+    } catch (e){
+      console.log(e.response.data.msg);
+      this.errorBack = e.response.data.msg;
+    }
   }
 }
 

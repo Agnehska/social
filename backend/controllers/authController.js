@@ -7,6 +7,7 @@ import jwt from 'jsonwebtoken';
 import path from 'path';
 import util from 'util';
 import __dirname from '../server.js';
+import MessageModel from '../models/messageModel.js';
 
 
 const authCtrl = {
@@ -215,9 +216,29 @@ const authCtrl = {
   getPosts: async (req, res) => {
     try {   
       const info = await PostModel.find().populate('user')
-      // console.log(info[0].user.fullname)
-      // const userInfo = UserModel.findById(info[0].user);
-      // console.log(userInfo)
+      res.json({msg: "It's ok", data: info})
+    } catch (err){
+      res.status(500).json({msg: err.message})
+    }
+  },
+  uploadMessage: async (req, res) => {
+    try {
+      const {message} = req.body;
+      const newMessage = await new MessageModel({
+        message, user: req.user._id
+      })
+
+      await newMessage.save();
+      const info = await MessageModel.findById(newMessage._id).populate('user')
+
+      res.json({msg: "Message uploaded successfully", file: info})
+    } catch (err){
+      res.status(500).json({msg: err.message})
+    }
+  },
+  getMessage: async (req, res) => {
+    try {   
+      const info = await MessageModel.find().populate('user')
       res.json({msg: "It's ok", data: info})
     } catch (err){
       res.status(500).json({msg: err.message})

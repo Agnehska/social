@@ -8,7 +8,7 @@ authRouter.post('/register', authCtrl.register);
 
 authRouter.post('/login', authCtrl.login);
 
-authRouter.post('/logout', authCtrl.logout);
+authRouter.get('/logout', authCtrl.logout);
 
 authRouter.post('/refresh_token', authCtrl.generateAccessToken);
 
@@ -22,6 +22,10 @@ authRouter.get('/video', authCtrl.videos);
 
 authRouter.post('/posts', middleAuth, authCtrl.uploadPost);
 
-authRouter.get('/posts', authCtrl.getPosts);
+authRouter.get('/posts', middleAuth, authCtrl.getPosts);
+
+authRouter.post('/message', middleAuth, authCtrl.uploadMessage);
+
+authRouter.get('/message', middleAuth, authCtrl.getMessage);
 
 export default authRouter;

@@ -60,7 +60,7 @@ const SideBar = () => {
 					</Link>
 				</div>
 			</div>
-			<div className='mx-auto max-h-80 overscroll-auto'>
+			<div className='w-full max-h-80 overscroll-auto'>
 				<Routes>
 						<Route path="/" element={<Login />} />
 						<Route path="/register" element={<Register />} />

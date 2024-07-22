@@ -1,37 +1,29 @@
 import React, { useEffect, useState } from "react";
 import Post from "../components/Post";
+import userStore from "../stores/user-store";
 
 export const Wall = () => {
   const [isLiked, setIsLiked] = useState(false);
   const [posts, setPosts] = useState([]);
+  const { user, token } = userStore;
 
+  console.log(token)
   useEffect(() => {
-    fetch('http://localhost:5000/api/posts')
+    fetch('http://localhost:5000/api/posts',{
+      headers: {Authorization: `Bearer ${token}`}
+      
+    })
     .then(data => data.json())
     .then(info => setPosts(info.data))
   }, [])
   return (
     <section className="w-full mx-auto w-full px-3 pt-4 dark:bg-gray-800 dark:text-white">
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 w-full">
-        {posts.map(post => {
+        {posts?.map(post => {
           return(
             <Post key={post._id} post={post} />
           )
         })}
-        
-        {/* <div
-            className="border p-7 rounded-xl bg-white dark:bg-gray-700 drop-shadow-md border-neutral-200/50 col-span-2 flex flex-col gap-y-10 justify-between">
-                <div className="flex flex-col gap-y-3.5">
-                    <p className="font-bold text-xl">Brilliant house to rent</p>
-                    <p className="font-medium text-slate-700/90 dark:text-gray-300">All eFounders teams have moved to Cycle for all
-                    things product management and it is truly a game-changer.</p>
-                </div>
-                <div className="flex flex-col">
-                    <img src="https://randomuser.me/api/portraits/women/54.jpg" alt="Jane Cooper" className="h-10 w-10"/>
-                    <p className="pt-2 text-sm font-semibold">Jane Cooper</p>
-                    <p className="text-sm font-medium text-slate-700/70 dark:text-gray-400">CEO at ABC Corporation</p>
-                </div>
-            </div> */}
         <div className="border p-7 rounded-xl bg-white dark:bg-gray-700 drop-shadow-md border-neutral-200/50 col-span-5 flex flex-col gap-y-10 justify-between">
           <div className="flex flex-col">
             <img
@@ -57,13 +49,13 @@ export const Wall = () => {
           </div>
           <svg
             onClick={() => setIsLiked(!isLiked)}
-            class="h-10 w-10 text-red-500"
+            className="h-10 w-10 text-red-500"
             viewBox="0 0 24 24"
             fill={isLiked ? "red" : 'none'}
             stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           >
             {" "}
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
