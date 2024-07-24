@@ -82,7 +82,8 @@ const authCtrl = {
       if (!newUser){
         return res.status(400).json({message: `Пользователь ${username} не существует`})
       }
-      const validPassword = bcrypt.compare(password, newUser.password)
+      const validPassword = await bcrypt.compare(password, newUser.password)
+
       if (!validPassword){
         return res.status(400).json({message: `Введен неверный пароль`})
       }

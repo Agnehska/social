@@ -3,8 +3,12 @@ import { useForm } from "react-hook-form";
 import { useStores } from "../stores";
 import { observer } from "mobx-react-lite";
 import { Link, useNavigate } from "react-router-dom";
+import { useNotification } from "../assets/hooks/useNotification";
 
 const Login = observer(() => {
+  const loginSuccess = useNotification('Authorization success',  'success');
+  const loginFailed = useNotification('Authorization failed',  'warning');
+
   const navigate = useNavigate();
   const { userStore } = useStores();
   const [showPass, setShowPass] = useState(false);
@@ -21,8 +25,13 @@ const Login = observer(() => {
   async function loginHandler (e){
     e.preventDefault();
     const err = await userStore.loginUser(userData)
-    console.log(err)
-    if (err === '') navigate('/profile')
+
+    if (err === '') {
+      navigate('/profile');
+      loginSuccess()
+    } else {
+      loginFailed()
+    }
   }
 
   return (

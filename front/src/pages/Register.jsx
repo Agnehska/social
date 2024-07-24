@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { observer } from "mobx-react-lite";
 import { Link, useNavigate } from "react-router-dom";
 import { useStores } from "../stores";
+import { useNotification } from "../assets/hooks/useNotification";
 
 const Register = observer( () => {
   const navigate = useNavigate();
@@ -19,6 +20,8 @@ const Register = observer( () => {
   const { register, formState: {
     errors,
   } } = useForm({mode: "onBlur"});
+  const registerSuccess = useNotification('Registration success',  'success');
+  const registerFailed = useNotification('Registration failed',  'warning');
 
   const createUser = async (e) => {
     e.preventDefault();
@@ -26,15 +29,21 @@ const Register = observer( () => {
       setError('')  
       const err = await userStore.registerUser(userData)
 
-      if (err === '') navigate('/')
-      setUserData({
-        fullname:'',
-        username: '',
-        email: '',
-        password: ''
-      })
+      if (err === '') {
+        navigate('/')
+        setUserData({
+          fullname:'',
+          username: '',
+          email: '',
+          password: ''
+        })
+        registerSuccess()
+      } else {
+        registerFailed()
+      }
     } else {
       setError('Пароли не совпадают')
+      registerFailed()
     }
   }
 
