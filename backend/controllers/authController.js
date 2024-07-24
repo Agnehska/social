@@ -57,28 +57,10 @@ const authCtrl = {
   },
   login: async (req, res) => {
     try {
-      // const {email, password} = req.body;
-
-      // const user = await UserModel.findOne({email})
-      // .populate("friends following", "-password")
-
-      // if (!user) return res.status(400).json({msg: 'User does not exist'})
-
-      // const isMatch = await bcrypt.compare(password, user.password)
-
-      // if (!isMatch) return res.status(400).json({msg: 'Password is incorrect'})
-
-      // const access_token = createAccessToken({id: user._id});
-      // const refresh_token = createRefreshToken({id: user._id});
-
-      
-      
-      
-      
       const {email, password} = req.body;
-      // console.log(req.body)
+
       const newUser = await UserModel.findOne({email})
-      // console.log(newUser)
+
       if (!newUser){
         return res.status(400).json({message: `Пользователь ${username} не существует`})
       }
@@ -165,7 +147,7 @@ const authCtrl = {
 
       await newImage.save();
 
-      res.json({msg: "File uploaded successfully", file: newImage})
+      res.json({msg: "File uploaded successfully", data: newImage})
     } catch (err){
       res.status(500).json({msg: err.message})
     }
@@ -174,7 +156,7 @@ const authCtrl = {
     try {
       const files = await ImageModel.find()
       console.log(files)
-      res.json({msg: "It's ok", files: files})
+      res.json({msg: "It's ok", data: files})
     } catch (err){
       res.status(500).json({msg: err.message})
     }
@@ -186,7 +168,7 @@ const authCtrl = {
         title, description, filename
       })
       await newVideo.save();
-      res.json({msg: "File uploaded successfully", file: newVideo})
+      res.json({msg: "File uploaded successfully", data: newVideo})
     } catch (err){
       res.status(500).json({msg: err.message})
     }
@@ -195,7 +177,7 @@ const authCtrl = {
     try {
       const files = await VideoModel.find()
       console.log(files)
-      res.json({msg: "It's ok", files: files})
+      res.json({msg: "It's ok", data: files})
     } catch (err){
       res.status(500).json({msg: err.message})
     }
@@ -209,7 +191,7 @@ const authCtrl = {
 
       await newPost.save();
 
-      res.json({msg: "File uploaded successfully", file: newPost})
+      res.json({msg: "File uploaded successfully", data: newPost})
     } catch (err){
       res.status(500).json({msg: err.message})
     }
@@ -232,7 +214,7 @@ const authCtrl = {
       await newMessage.save();
       const info = await MessageModel.findById(newMessage._id).populate('user')
 
-      res.json({msg: "Message uploaded successfully", file: info})
+      res.json({msg: "Message uploaded successfully", data: info})
     } catch (err){
       res.status(500).json({msg: err.message})
     }

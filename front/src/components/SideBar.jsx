@@ -10,11 +10,12 @@ import { Music } from '../pages/Music';
 import { Video } from '../pages/Video';
 import { Wall } from '../pages/Wall';
 import NotFound from '../pages/NotFound';
+import Game from '../pages/Game';
 
 const SideBar = () => {
 	return (
 		<div className='flex w-full mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 container'>
-			<div className='mr-5 min-w-72 h-80 bg-blue-200 py-10 px-5'>
+			<div className='mr-5 min-w-72 h-90 bg-blue-200 py-10 px-5'>
 				<div className='flex flex-col '>
 					<Link
 						to={'/profile'}
@@ -52,11 +53,17 @@ const SideBar = () => {
 					>
 						Клипы
 					</Link>
-                    <Link
+          <Link
 						to={'/photoes'}
 						className='text-blue-800 hover:bg-blue-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
 					>
 						Фотографии
+					</Link>
+					<Link
+						to={'/game'}
+						className='text-blue-800 hover:bg-blue-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
+					>
+						Игра
 					</Link>
 				</div>
 			</div>
@@ -71,6 +78,7 @@ const SideBar = () => {
 						<Route path="/music" element={<Music />} />
 						<Route path="/video" element={<Video />} />
 						<Route path="/news" element={<Wall />} />
+						<Route path="/game" element={<Game />} />
 						<Route path='*' element={<NotFound />} />
 				</Routes>
 			</div>
