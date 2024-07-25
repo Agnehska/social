@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import VideoFile from '../components/VideoFile';
+import { useFetchData } from '../assets/hooks/useFetchData';
 
 export const Video = () => {
-  const [video, setvideo] = useState([])
+  const {res:video, refetch} = useFetchData('GET', 'video', null, null)
 
-  useEffect(() => {
-      fetch('http://localhost:5000/api/video')
-      .then(data => data.json())
-      .then(info => setvideo(info.files))
-    }, [])
   return (
     <div className="flex justify-between gap-0.5 gap-y-5 flex-wrap pt-4">
       {video.map(movie => {

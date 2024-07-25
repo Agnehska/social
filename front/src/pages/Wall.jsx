@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Post from "../components/Post";
 import userStore from "../stores/user-store";
+import { useFetchData } from "../assets/hooks/useFetchData";
 
 export const Wall = () => {
   const [isLiked, setIsLiked] = useState(false);
-  const [posts, setPosts] = useState([]);
-  const { user, token } = userStore;
-
-  console.log(token)
-  useEffect(() => {
-    fetch('http://localhost:5000/api/posts',{
-      headers: {Authorization: `Bearer ${token}`}
-      
-    })
-    .then(data => data.json())
-    .then(info => setPosts(info.data))
-  }, [])
+  const { token } = userStore;
+  const {res:posts, refetch} = useFetchData('GET', 'posts', null, token)
+  
   return (
     <section className="w-full mx-auto w-full px-3 pt-4 dark:bg-gray-800 dark:text-white">
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 w-full">

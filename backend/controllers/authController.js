@@ -124,7 +124,7 @@ const authCtrl = {
   },
   upload: async (req, res) => {
     try {
-      console.log(req.files.file)
+      // console.log(req.files.file)
       const file = req.files.file;
       const fileName = file.name;
       const size = file.data.length;
@@ -155,7 +155,7 @@ const authCtrl = {
   images: async (req, res) => {
     try {
       const files = await ImageModel.find()
-      console.log(files)
+      // console.log(files)
       res.json({msg: "It's ok", data: files})
     } catch (err){
       res.status(500).json({msg: err.message})
@@ -176,7 +176,7 @@ const authCtrl = {
   videos: async (req, res) => {
     try {
       const files = await VideoModel.find()
-      console.log(files)
+      // console.log(files)
       res.json({msg: "It's ok", data: files})
     } catch (err){
       res.status(500).json({msg: err.message})

@@ -1,21 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import OneImage from "../components/OneImage";
 import { observer } from 'mobx-react-lite';
 import ImageStore from "../stores/image-store";
+import { useFetchData } from "../assets/hooks/useFetchData";
 
-export const Photoes = observer(() => {
-  const [images, setImages] = useState([]);
+export const Photoes = () => {
+  const {res:images, refetch} = useFetchData('GET', 'images', null, null)
   const [image, setImage] = useState(null);
-  const {imageInfo, addImage, getImage} = ImageStore;
-
-  
-
-  useEffect(() => {
-    fetch("http://localhost:5000/api/images")
-      .then((data) => data.json())
-      .then((info) => setImages(info.files));
-    // getImage()
-  }, []);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -25,11 +16,7 @@ export const Photoes = observer(() => {
       method: "POST",
       body: formData,
     })
-    .then(res => res.json())
-    .then((res) => {
-      console.log(res);
-      setImages([...images, res.file])
-    });
+    .then(() => refetch())
   }
 
   return (
@@ -56,4 +43,4 @@ export const Photoes = observer(() => {
       </div>
     </>
   );
-});
+};
