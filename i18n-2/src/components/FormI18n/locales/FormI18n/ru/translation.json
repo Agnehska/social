@@ -1,0 +1,10 @@
+{
+  "message": "Привет <1>name</1>!!!!",
+  "countMsg_one": "У тебя {{count}} сообщение.",
+  "countMsg_other": "У тебя {{count}} сообщения.",
+  "CurrentLocale": "Текущий язык {{locale}}",
+  "ru": "Русский",
+  "en": "Английский",
+  "TodayKey": "Сегодня",
+  "passedMessage": "Это переданное сообщение"
+}

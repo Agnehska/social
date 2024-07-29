@@ -1,0 +1,10 @@
+{
+  "message": "Hello <1>{{name}}</1>!!!!",
+  "countMsg_one": "You have {{count}} message.",
+  "countMsg_other": "You have {{count}} messages.",
+  "CurrentLocale": "Current locale is {{locale}}",
+  "ru": "Russian",
+  "en": "English",
+  "TodayKey": "Today is",
+  "passedMessage": "This is passed message"
+}

@@ -1,0 +1,9 @@
+{
+    "CurrentLocale": "Текущий язык {locale}",
+    "ru": "Русский",
+    "en": "Английский",
+    "TodayKey": "Сегодня",
+    "LoginPlaceholder": "Введите логин",
+    "Login": "Логин",
+    "Password": "Пароль"
+}
