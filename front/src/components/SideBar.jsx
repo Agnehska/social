@@ -11,8 +11,11 @@ import { Video } from '../pages/Video';
 import { Wall } from '../pages/Wall';
 import NotFound from '../pages/NotFound';
 import Game from '../pages/Game';
+import { useTranslation } from 'react-i18next';
 
 const SideBar = () => {
+	const { t } = useTranslation();
+
 	return (
 		<div className='flex w-full mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 container'>
 			<div className='mr-5 min-w-72 h-90 bg-blue-200 py-10 px-5'>
@@ -21,49 +24,49 @@ const SideBar = () => {
 						to={'/profile'}
 						className='text-blue-800 hover:bg-blue-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
 					>
-						Профиль
+						{t('menu.0')}
 					</Link>
 					<Link
 						to={'/news'}
 						className='text-blue-800 hover:bg-blue-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
 					>
-						Стена
+						{t('menu.1')}
 					</Link>
 					<Link
 						to={'/message'}
 						className='text-blue-800 hover:bg-blue-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
 					>
-						Сообщения
+						{t('menu.2')}
 					</Link>
                     <Link
 						to={'/friends'}
 						className='text-blue-800 hover:bg-blue-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
 					>
-						Друзья
+						{t('menu.3')}
 					</Link>
                     <Link
 						to={'/music'}
 						className='text-blue-800 hover:bg-blue-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
 					>
-						Музыка
+						{t('menu.4')}
 					</Link>
                     <Link
 						to={'/video'}
 						className='text-blue-800 hover:bg-blue-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
 					>
-						Клипы
+						{t('menu.5')}
 					</Link>
           <Link
 						to={'/photoes'}
 						className='text-blue-800 hover:bg-blue-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
 					>
-						Фотографии
+						{t('menu.6')}
 					</Link>
 					<Link
 						to={'/game'}
 						className='text-blue-800 hover:bg-blue-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
 					>
-						Игра
+						{t('menu.7')}
 					</Link>
 				</div>
 			</div>

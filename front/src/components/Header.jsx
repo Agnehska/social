@@ -1,24 +1,27 @@
-import { Fragment } from 'react';
 import logo from '../assets/img/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { useStores } from '../stores';
 import UserStore from '../stores/user-store';
 import { useNotification } from '../assets/hooks/useNotification';
+import { useTranslation } from 'react-i18next';
+import Languageselector from './translator/Languageselector';
 
 
 export default function Header() {
 	const navigate = useNavigate();
 	const { userStore } = useStores();
 	const logoutSuccess = useNotification('Logout success',  'success');
-	const { user, errorBack } = UserStore;
+	const { user } = UserStore;
 
 	const logout = async (e) => {
 		e.preventDefault();
     const err = await userStore.logoutUser();
-    // console.log(err)
+		console.log(err)
 		logoutSuccess();
     navigate('/');
 	}
+
+	const { t } = useTranslation();
 
 	return (
 		<nav className='bg-blue-200 w-full'>
@@ -113,6 +116,7 @@ export default function Header() {
 						</div>
 					</div> :
 					<Link to='/'>Войти</Link> }
+					<Languageselector />
 				</div>
 			</div>
 		</nav>

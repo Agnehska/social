@@ -4,14 +4,9 @@ import { useFetchData } from "../assets/hooks/useFetchData";
 
 export const Video = () => {
   const [cardList, setCardList] = useState([]);
-  const [cardList2, setCardList2] = useState([
-    {id:1, order: 3, text: "Card 1"},
-    {id:2, order: 1, text: "Card 2"}, 
-    {id:3, order: 2, text: "Card 3"},
-    {id:4, order: 4, text: "Card 4"},
-  ]);
+
   const [currentCard, setCurrentCard] = useState(null)
-  const { res: video, refetch } = useFetchData("GET", "video", null, null);
+  const { res: video } = useFetchData("GET", "video", null, null);
   useEffect(() => {
     let order = 0;
     setCardList(video.map(el => {

@@ -2,7 +2,7 @@ import React from 'react'
 import userStore from '../stores/user-store';
 
 const OneMessage = ({message}) => {
-  const { user, errorBack } = userStore;
+  const { user } = userStore;
   return (
     <>
     {user._id === message.user._id ?

@@ -1,19 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import OneMessage from '../components/OneMessage';
 import userStore from '../stores/user-store';
 import { useFetchData } from '../assets/hooks/useFetchData';
 
 const Messages =  () => {
-	// const [messages, setMessages] = useState([]);
 	const [msg, setMsg] = useState('');
 	const { token } = userStore;
   const navigate = useNavigate();
 	const {res: messages, refetch} = useFetchData('GET', 'message', null, token)
-
-	// useEffect(() => {
-	// 	if (messages.length === 0) navigate('/')
-	// }, [])
 
 	const addMessage = (event) => {
 		event.preventDefault();

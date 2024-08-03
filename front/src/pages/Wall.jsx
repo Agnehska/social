@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Post from "../components/Post";
 import userStore from "../stores/user-store";
 import { useFetchData } from "../assets/hooks/useFetchData";
@@ -6,7 +6,7 @@ import { useFetchData } from "../assets/hooks/useFetchData";
 export const Wall = () => {
   const [isLiked, setIsLiked] = useState(false);
   const { token } = userStore;
-  const {res:posts, refetch} = useFetchData('GET', 'posts', null, token)
+  const {res:posts} = useFetchData('GET', 'posts', null, token)
   
   return (
     <section className="w-full mx-auto w-full px-3 pt-4 dark:bg-gray-800 dark:text-white">

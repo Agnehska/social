@@ -140,3 +140,7 @@ li{
   color: rgb(59, 2, 2);
   font-weight: 700;
 }
+
+button.selected{
+  background-color: #646cff;
+}

@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { getDataApi, postDataApi } from "../utils/fetchDataAPI";
+import { getDataApi } from "../utils/fetchDataAPI";
 
 class ImageStore {
   imageInfo = {

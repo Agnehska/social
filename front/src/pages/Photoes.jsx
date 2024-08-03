@@ -1,7 +1,5 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import OneImage from "../components/OneImage";
-import { observer } from 'mobx-react-lite';
-import ImageStore from "../stores/image-store";
 import { useFetchData } from "../assets/hooks/useFetchData";
 
 export const Photoes = () => {

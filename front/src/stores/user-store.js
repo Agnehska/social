@@ -59,7 +59,7 @@ class UserStore{
     try{
       const res = await getDataApi('logout', this.user.token);
       this.user = initialUser;
-      // console.log('after logout', res.data, this.user);
+      console.log('after logout', res.data);
       this.errorBack = '';
     } catch (e){
       console.log(e.response.data.msg);
